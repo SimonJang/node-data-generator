@@ -8,15 +8,11 @@ Data generator
 
 Run `npm run generate <command> <options>`
 
-3. Explore your data
+2. Explore your data
 
 The data is in [NDJSON](http://ndjson.org/) format.
 
-### Use the `--help` command when stuck
-
-Run `npm run generate --help`
-
-### List of commands
+## List of commands
 
 #### `user`
 
@@ -52,6 +48,10 @@ Number of records that will be generated.
 `npm run generate user --count 100000`
 
 The above command will generate a NDJSON file `data.json` with 100k users in the `dist` folder  of this project.
+
+### Use the `--help` command when stuck
+
+Run `npm run generate --help`
 
 ## TODO
 
