@@ -1,4 +1,5 @@
 import * as fs from 'fs';
+import * as zlib from 'zlib';
 import * as faker from 'faker';
 import * as pokemon from 'pokemon';
 import * as moment from 'moment-timezone';
@@ -10,7 +11,7 @@ import {batchGenerator} from './batch-generator';
  *
  * @param options - Generator options
  */
-export const generate: DataGenerator = async ({key, count}) => {
+export const generate: DataGenerator = async ({key, count, gzip}) => {
 	console.log('Running data generator for `user` command');
 
 	const stream = fs.createWriteStream(key, {flags: 'a'});
@@ -34,6 +35,17 @@ export const generate: DataGenerator = async ({key, count}) => {
 	}
 
 	stream.end();
+
+	// Fix duplicate data
+	if (gzip) {
+		const source = fs.createReadStream(key);
+		const dest = fs.createWriteStream(key + '.gz');
+		const zip = zlib.createGzip();
+
+		source
+			.pipe(zip)
+			.pipe(dest);
+	}
 
 	return Promise.resolve();
 };
