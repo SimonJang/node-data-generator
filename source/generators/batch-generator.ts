@@ -1,4 +1,4 @@
-const HIGH_WATER_MARK = 1000;
+const HIGH_WATER_MARK = 10000;
 
 /**
  * Generator function
@@ -12,7 +12,7 @@ export function* batchGenerator(count: number, fn: () => string) {
 	for (let counter = 1; counter <= count; counter++) {
 		buffer = buffer + fn();
 
-		if (counter === HIGH_WATER_MARK) {
+		if (counter % HIGH_WATER_MARK === 0) {
 			yield buffer;
 			buffer = '';
 		}
