@@ -10,7 +10,7 @@ import {batchGenerator} from './batch-generator';
  * @param options - Generator options
  */
 export const generate: DataGenerator = async ({key, count}) => {
-	console.log('Running data user generator');
+	console.log('Running data generator for `user` command');
 
 	const stream = fs.createWriteStream(key, {flags: 'a'});
 
@@ -28,7 +28,7 @@ export const generate: DataGenerator = async ({key, count}) => {
 	};
 
 	for (const data of batchGenerator(parseInt(count, 10), createUser)) {
-		console.log('Writing data at' + new Date().toISOString());
+		console.log('Writing data at ' + new Date().toISOString());
 		stream.write(data);
 	}
 
