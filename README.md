@@ -25,6 +25,7 @@ Will generate user objects with the following schema:
 ```javascript
 interface User {
 	firstName: string;
+	id: string;
 	name: string;
 	age: number;
 	favoritePokemon: string;
@@ -40,7 +41,7 @@ File path, location of where the data will be stored.
 
 #### `gzip`
 
-WIP: Intention is to have the file gzipped when this flag is enabled.
+Create a file that is gzipped.
 
 #### `count`
 
@@ -54,7 +55,7 @@ The above command will generate 100k users in the `dist` folder of this project.
 
 ## TODO
 
-- Add CLI for CLI data generation
+- Fix GZIP duplicate files
 - Add more examples
 - Add more documentation
 - Add template support
