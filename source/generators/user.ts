@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import * as faker from 'faker';
 import * as pokemon from 'pokemon';
+import * as moment from 'moment-timezone';
 import {DataGenerator} from '../entities';
 import {batchGenerator} from './batch-generator';
 
@@ -20,7 +21,7 @@ export const generate: DataGenerator = async ({key, count}) => {
 			id: faker.random.uuid().split('-').join(''),
 			name: faker.name.lastName(),
 			age: faker.random.number({min: 18, max: 65}),
-			lastLogin: faker.date.recent(faker.random.number({min: 0, max: 365})),
+			lastLogin: moment(faker.date.recent(faker.random.number({min: 0, max: 365}))).format('YYYY-MM-DD hh:mm:ss'),
 			favoritePokemon: pokemon.all('en')[faker.random.number({min: 0, max: pokemon.all('en').length - 1})]
 		};
 
