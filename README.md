@@ -55,10 +55,9 @@ Run `npm run generate --help`
 
 ## TODO
 
-- Fix GZIP duplicate files
 - Add more examples
 - Add more documentation
 - Add template support
 - Add AWS/Azure/GCP upload functionality
 - Support multiple formats (CSV, Parquet)
-- Add different types of compression
+- Add different types of compression (Snappy)
