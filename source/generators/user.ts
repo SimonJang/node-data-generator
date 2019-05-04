@@ -14,7 +14,14 @@ import {batchGenerator} from './batch-generator';
 export const generate: DataGenerator = async ({key, count, gzip}) => {
 	console.log('Running data generator for `user` command');
 
-	const stream = fs.createWriteStream(key, {flags: 'a'});
+	let stream: any;
+
+	if (gzip) {
+		stream = zlib.createGzip();
+		stream.pipe(fs.createWriteStream(`${key}.gz`));
+	} else {
+		stream = fs.createWriteStream(key, {flags: 'a'});
+	}
 
 	const createUser = () => {
 		const user = {
@@ -31,21 +38,11 @@ export const generate: DataGenerator = async ({key, count, gzip}) => {
 
 	for (const data of batchGenerator(parseInt(count, 10), createUser)) {
 		console.log('Writing data at ' + new Date().toISOString());
+
 		stream.write(data);
 	}
 
 	stream.end();
-
-	// Fix duplicate data
-	if (gzip) {
-		const source = fs.createReadStream(key);
-		const dest = fs.createWriteStream(key + '.gz');
-		const zip = zlib.createGzip();
-
-		source
-			.pipe(zip)
-			.pipe(dest);
-	}
 
 	return Promise.resolve();
 };
