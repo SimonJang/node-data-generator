@@ -15,7 +15,11 @@ const cli = meow(
 	Options:
 		--count		Number of records that need to be generated. Default: 1
 		--key 		Path to write the data. Default: cwd/data.json
-		--gzip 		Indicate if the file needs to be gzipped. Default: false
+		--gzip 		Indicate if the file needs to be compressed using Gzip. Default: false
+		--snappy	Indicate if the file needs to be compressed using Snappy. Default: false
+
+	Notes:
+		- snappy option is mutually exclusive with gzip and vice versa.
 	`,
 	{
 		flags: {
@@ -30,6 +34,10 @@ const cli = meow(
 			count: {
 				type: 'string',
 				default: '1'
+			},
+			snappy: {
+				type: 'boolean',
+				default: false
 			}
 		}
 	}
@@ -57,5 +65,9 @@ const execute = async (cmd: string, opts: Flag): Promise<void> => {
 };
 
 (async () => { // tslint:disable-line:no-floating-promises
+	if (options.snappy && options.gzip) {
+		throw new Error('Snappy and Gzip compression cannot be be active at the same time');
+	}
+
 	await execute(command, options);
 })();

@@ -1,4 +1,5 @@
 import * as fs from 'fs';
+import * as snappy from 'snappy-stream';
 import * as zlib from 'zlib';
 import * as faker from 'faker';
 import * as pokemon from 'pokemon';
@@ -19,6 +20,9 @@ export const generate: DataGenerator = async ({key, count, gzip}) => {
 	if (gzip) {
 		stream = zlib.createGzip();
 		stream.pipe(fs.createWriteStream(`${key}.gz`));
+	} if (snappy) {
+		stream = snappy.createCompressStream();
+		stream.pipe(fs.createWriteStream(`${key}.sz`));
 	} else {
 		stream = fs.createWriteStream(key, {flags: 'a'});
 	}

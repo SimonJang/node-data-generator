@@ -29,6 +29,7 @@
 		"moment-timezone": "^0.5.23",
 		"pokemon": "^2.0.0",
 		"rxjs": "^6.5.1",
+		"snappy-stream": "^3.0.1",
 		"tempy": "^0.3.0"
 	},
 	"devDependencies": {

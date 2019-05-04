@@ -1,6 +1,7 @@
 # Data generator
 
-Data generator
+Data generator to generate random data.
+
 
 ## How to use?
 
@@ -11,6 +12,7 @@ Run `npm run generate <command> <options>`
 2. Explore your data
 
 The data is in [NDJSON](http://ndjson.org/) format.
+
 
 ## List of commands
 
@@ -37,11 +39,16 @@ File path, location of where the data will be stored.
 
 #### `gzip`
 
-Create a file that is gzipped.
+The data is compressed in a gzip file. `gzip` option is **mutually exclusive with `snappy`**
+
+#### `snappy`
+
+The data is compressed in a snappy file. `snappy` option is **mutually exclusive with `gzip`**
 
 #### `count`
 
 Number of records that will be generated.
+
 
 ## Example
 
@@ -52,6 +59,7 @@ The above command will generate a NDJSON file `data.json` with 100k users in the
 ### Use the `--help` command when stuck
 
 Run `npm run generate --help`
+
 
 ## TODO
 
