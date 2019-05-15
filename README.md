@@ -61,3 +61,4 @@ Run `npm run generate --help`
 - Add AWS/Azure/GCP upload functionality
 - Support multiple formats (CSV, Parquet)
 - Add different types of compression (Snappy)
+- Add additional data generation with specific random.
