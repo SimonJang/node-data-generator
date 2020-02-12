@@ -2,6 +2,7 @@ import * as path from 'path';
 import * as meow from 'meow';
 import {Flag, Command, DataGenerator} from './entities';
 import {generators} from './generators';
+import { assertsFormatFlag } from './utils';
 
 const cli = meow(
 	`
@@ -30,6 +31,10 @@ const cli = meow(
 			count: {
 				type: 'string',
 				default: '1'
+			},
+			format: {
+				type: 'string',
+				default: 'ndjson'
 			}
 		}
 	}
@@ -44,6 +49,8 @@ const dataGenerators = new Map<Command, DataGenerator>([
 
 const run = async (cmd: Command, opts: Flag) => {
 	const generator = dataGenerators.get(cmd);
+
+	assertsFormatFlag(opts.format);
 
 	if (!generator) {
 		throw new Error('Unknown command');

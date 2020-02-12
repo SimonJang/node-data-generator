@@ -1,17 +1,20 @@
 import * as fs from 'fs';
 import * as zlib from 'zlib';
-import * as faker from 'faker';
-import * as pokemon from 'pokemon';
-import * as moment from 'moment-timezone';
-import {DataGenerator} from '../entities';
-import {batchGenerator} from './batch-generator';
+import { DataGenerator, Format } from '../entities';
+import { batchGenerator } from './batch-generator';
+import { createUserNDJSON, createUserCSV, createUserCSVHeader } from './data-generators';
+
+const generators = {
+	ndjson: createUserNDJSON,
+	csv: createUserCSV
+}
 
 /**
  * Generate user data
  *
  * @param options - Generator options
  */
-export const generate: DataGenerator = async ({key, count, gzip}) => {
+export const generate: DataGenerator = async ({ key, count, gzip, format }) => {
 	console.log('Running data generator for `user` command');
 
 	let stream: any;
@@ -20,23 +23,14 @@ export const generate: DataGenerator = async ({key, count, gzip}) => {
 		stream = zlib.createGzip();
 		stream.pipe(fs.createWriteStream(`${key}.gz`));
 	} else {
-		stream = fs.createWriteStream(key, {flags: 'a'});
+		stream = fs.createWriteStream(key, { flags: 'w'});
 	}
 
-	const createUser = () => {
-		const user = {
-			firstName: faker.name.firstName(),
-			id: faker.random.uuid().split('-').join(''),
-			name: faker.name.lastName(),
-			age: faker.random.number({min: 18, max: 65}),
-			lastLogin: moment(faker.date.recent(faker.random.number({min: 0, max: 365}))).format('YYYY-MM-DD hh:mm:ss'),
-			favoritePokemon: pokemon.all('en')[faker.random.number({min: 0, max: pokemon.all('en').length - 1})]
-		};
+	if (format === Format.csv) {
+		stream.write(createUserCSVHeader())
+	}
 
-		return JSON.stringify(user) + '\n';
-	};
-
-	for (const data of batchGenerator(parseInt(count, 10), createUser)) {
+	for (const data of batchGenerator(parseInt(count, 10), generators[format])) {
 		console.log('Writing data at ' + new Date().toISOString());
 
 		stream.write(data);
