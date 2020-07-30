@@ -26,7 +26,7 @@
 	"dependencies": {
 		"faker": "^4.1.0",
 		"meow": "^5.0.0",
-		"moment-timezone": "^0.5.27",
+		"moment-timezone": "^0.5.31",
 		"pokemon": "^2.0.2",
 		"rxjs": "^6.5.4",
 		"tempy": "^0.3.0"
@@ -34,7 +34,6 @@
 	"devDependencies": {
 		"@types/faker": "^4.1.9",
 		"@types/meow": "^5.0.0",
-		"@types/moment-timezone": "^0.5.12",
 		"@types/node": "^9.6.55",
 		"ava": "^0.25.0",
 		"del-cli": "^0.2.1",

@@ -7,6 +7,7 @@ const HIGH_WATER_MARK = 10000;
  * @param fn - Factory function
  */
 export function* batchGenerator(count: number, fn: () => string) {
+	console.log('Count :: ', count);
 	let buffer = '';
 
 	for (let counter = 1; counter <= count; counter++) {
